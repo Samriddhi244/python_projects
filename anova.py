@@ -4,15 +4,15 @@ import statsmodels.api as sm
 from statsmodels.formula.api import ols
 
 # Load the Excel file
-file_path = r'C:\Users\ASUS\OneDrive\Desktop\NEELAM BUA WORK.xlsx'
+file_path = r'C:\Users\ASUS\OneDrive\Desktop\boyscity.xlsx'
 data = pd.read_excel(file_path)
 
 # Display the first few rows to understand the structure
 print(data.head())
 
 # Replace 'DependentVariable' and 'IndependentVariable' with the actual column names from your data
-dependent_variable = 'DependentVariable'
-independent_variable = 'IndependentVariable'
+dependent_variable = 'MB6'
+independent_variable = 'STRESS'
 
 # Build the ANOVA model
 model = ols(f'{dependent_variable} ~ C({independent_variable})', data=data).fit()
