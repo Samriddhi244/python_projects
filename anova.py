@@ -1,4 +1,6 @@
 import pandas as pd
+import statsmodels.api as sm
+from statsmodels.formula.api import ols
 
 # Load the datasets from the provided Excel files
 girlsvillage_data = pd.read_excel(r'C:\Users\ASUS\OneDrive\Desktop\girls village.xlsx')
@@ -7,7 +9,10 @@ girlscity_data = pd.read_excel(r'C:\Users\ASUS\OneDrive\Desktop\girlscity.xlsx')
 boyscity_data = pd.read_excel(r'C:\Users\ASUS\OneDrive\Desktop\boyscity.xlsx')
 
 # Display the first few rows of each dataset to understand their structure
-girlsvillage_data.head(), boysvillage_data.head(), boyscity_data.head(), girlscity_data.head()
+print(girlsvillage_data.head())
+print(boysvillage_data.head())
+print(boyscity_data.head())
+print(girlscity_data.head())
 # Add Gender column to each dataset
 girlsvillage_data['Gender'] = 'Girl'
 boysvillage_data['Gender'] = 'Boy'
@@ -19,3 +24,10 @@ combined_data = pd.concat([girlsvillage_data, boysvillage_data, girlscity_data, 
 
 # Display the first few rows of the combined dataset
 combined_data.head()
+
+# Fit the 3x2 ANOVA model
+model = ols('MSTOTAL ~ C(Gender) * STRESS', data=combined_data).fit()
+anova_table = sm.stats.anova_lm(model, typ=2)
+
+# Display the ANOVA table
+print(anova_table)
