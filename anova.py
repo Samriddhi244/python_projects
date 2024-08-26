@@ -25,20 +25,14 @@ boyscity_data['Area'] = 'city'
 
 
 # Combine the datasets
-combined_data = pd.concat([girlsvillage_data, boysvillage_data, girlscity_data, boyscity_data], ignore_index=True)
+combined_data = pd.concat([girlsvillage_data, girlscity_data,boyscity_data,boysvillage_data], ignore_index=True)
 
 # Display the first few rows of the combined dataset
 combined_data.head()
-
-# Define the formula for the ANOVA model
-formula = 'TOTAL ~ C(TOTAL) * C(Gender) * C(Area)'
-
 # Fit the model
-model = ols(formula, data=combined_data).fit()
-
+anova_model = ols('TOTAL ~ Area', data=combined_data).fit()
 # Perform the ANOVA
-anova_table = sm.stats.anova_lm(model, typ=2)
+anova_table = sm.stats.anova_lm(anova_model, typ=2)
 
 # Display the ANOVA table
 print(anova_table)
-
