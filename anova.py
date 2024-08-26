@@ -18,6 +18,11 @@ girlsvillage_data['Gender'] = 'Girl'
 boysvillage_data['Gender'] = 'Boy'
 girlscity_data['Gender'] = 'Girl'
 boyscity_data['Gender'] = 'Boy'
+girlsvillage_data['Area'] = 'village'
+boysvillage_data['Area'] = 'village'
+girlscity_data['Area'] = 'city'
+boyscity_data['Area'] = 'city'
+
 
 # Combine the datasets
 combined_data = pd.concat([girlsvillage_data, boysvillage_data, girlscity_data, boyscity_data], ignore_index=True)
@@ -25,9 +30,15 @@ combined_data = pd.concat([girlsvillage_data, boysvillage_data, girlscity_data, 
 # Display the first few rows of the combined dataset
 combined_data.head()
 
-# Fit the 3x2 ANOVA model
-model = ols('MSTOTAL ~ C(Gender) * STRESS', data=combined_data).fit()
+# Define the formula for the ANOVA model
+formula = 'TOTAL ~ C(TOTAL) * C(Gender)'
+
+# Fit the model
+model = ols(formula, data=combined_data).fit()
+
+# Perform the ANOVA
 anova_table = sm.stats.anova_lm(model, typ=2)
 
 # Display the ANOVA table
 print(anova_table)
+
