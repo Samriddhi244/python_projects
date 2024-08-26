@@ -31,7 +31,7 @@ combined_data = pd.concat([girlsvillage_data, boysvillage_data, girlscity_data, 
 combined_data.head()
 
 # Define the formula for the ANOVA model
-formula = 'TOTAL ~ C(TOTAL) * C(Gender)'
+formula = 'TOTAL ~ C(TOTAL) * C(Gender) * C(Area)'
 
 # Fit the model
 model = ols(formula, data=combined_data).fit()
